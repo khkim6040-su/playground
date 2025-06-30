@@ -1,0 +1,14 @@
+on:
+  repository_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print user inputs
+        run: |
+          echo "Event type: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Inputs: ${{ toJson(github.event.inputs) }}"
