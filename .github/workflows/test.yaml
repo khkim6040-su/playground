@@ -11,5 +11,5 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "Ref: ${{ github.ref }}"
           echo "Actor: ${{ github.actor }}"
-          echo "Inputs: ${{ toJson(github.event.client_payload) }}"
+          echo "Inputs: ${{ github.event.client_payload }}"
 
