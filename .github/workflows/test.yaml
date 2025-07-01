@@ -11,5 +11,9 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "Ref: ${{ github.ref }}"
           echo "Actor: ${{ github.actor }}"
-          echo "Inputs: ${{ github.event.client_payload }}"
+          echo "client_payload: ${{ github.event.client_payload }}"
+          echo "list_of_servers_patched: ${{ github.event.client_payload.list_of_servers_patched }}"
+          echo "docker_image_tag: ${{ github.event.client_payload.docker_image_tag }}"
+          echo "arena_simulation_server_image_tag: ${{ github.event.client_payload.arena_simulation_server_image_tag }}"
+          echo "static_data_version: ${{ github.event.client_payload.static_data_version }}"
 
