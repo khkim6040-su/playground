@@ -1,5 +1,6 @@
 on:
   repository_dispatch:
+    types: slack-deploy
 
 jobs:
   test:
