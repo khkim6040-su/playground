@@ -7,15 +7,11 @@ jobs:
     steps:
       - name: 입력값 출력
         run: |
-          echo "Event type: ${{ github.event.action }}"
-          echo "Repository: ${{ github.repository }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Actor: ${{ github.actor }}"
-          echo "client_payload: ${{ github.event.client_payload }}"
-          echo "list_of_servers_patched: ${{ github.event.client_payload.list_of_servers_patched }}"
-          echo "docker_image_tag: ${{ github.event.client_payload.docker_image_tag }}"
-          echo "arena_simulation_server_image_tag: ${{ github.event.client_payload.arena_simulation_server_image_tag }}"
-          echo "static_data_version: ${{ github.event.client_payload.static_data_version }}"
+          printf "%-40s\t: %s\n" \
+            "패치할 서버 리스트" "${IN:-$NO_INPUT}" \
+            "도커 이미지 태그" "${TAG:-$NO_INPUT}" \
+            "아레나 시뮬레이션 서버 이미지 태그" "${ARENA_TAG:-$NO_INPUT}" \
+            "스테틱 데이터 버젼" "${STATIC_DATA_VER:-$NO_INPUT}"
         env:
           IN: ${{ github.event.client_payload.list_of_servers_patched }}
           TAG: ${{ github.event.client_payload.docker_image_tag }}
