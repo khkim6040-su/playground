@@ -54,7 +54,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "github action에서 포매팅 잘 되어 전송되는지"
+                    "text": "github action에서 포매팅 잘 되어 전송되는지 확인하는 메세지입니다."
                   }
                 }
                 ${{ env.TAG && format(',{{ "type": "section", "text": {{ "type": "mrkdwn", "text": "{0} *서버 이미지 태그:* `{1}`" }} }}', steps.check-lobby.outcome == 'failure' && '❌' || '⭕', env.TAG) }}
