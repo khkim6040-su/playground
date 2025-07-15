@@ -34,8 +34,8 @@ jobs:
     env:
       # #slack-app-dev의 channel ID
       # TODO: 나중에 메세지를 보낼 채널로 변경
-      CHANNEL_ID: ${{ secrets.SLACK_GWANHO_DM_CHANNEL_ID }}
-      SLACK_NK_NOTI_BOT_TOKEN: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+      DM_CHANNEL_ID: ${{ secrets.SLACK_GWANHO_DM_CHANNEL_ID }}
+      CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
 
     steps:
       - name: 개인 DM 채널과 특정 메세지에 스레드 메세지 전송
