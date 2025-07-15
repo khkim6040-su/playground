@@ -48,7 +48,7 @@ jobs:
               "channel": "${{ env.CHANNEL_ID }}",
               "thread_ts": "${{ env.MESSAGE_TS }}",
               "text": "입력값 전송",
-              "replay_broadcast": false,
+              "replay_broadcast": true,
               "blocks": [
                 {
                   "type": "section",
