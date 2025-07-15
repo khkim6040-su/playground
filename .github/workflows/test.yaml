@@ -38,7 +38,7 @@ jobs:
       CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
 
     steps:
-      - name: 개인 DM 채널과 특정 메세지에 스레드 메세지 전송
+      - name: 채널에 broadcast 메세지 전송
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
