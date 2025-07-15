@@ -2,8 +2,19 @@ on:
   repository_dispatch:
     types: slack-deploy
 
+
+env:
+  IN: ${{ github.event.client_payload.list_of_servers_patched }}
+  TAG: ${{ github.event.client_payload.docker_image_tag }}
+  ARENA_TAG: ${{ github.event.client_payload.arena_simulation_server_image_tag }}
+  STATIC_DATA_VER: ${{ github.event.client_payload.static_data_version }}
+  CORE_VERSION_MAP: ${{ github.event.client_payload.core_version_map }}
+  DATA_PACK_VERSION_MAP: ${{ github.event.client_payload.data_pack_version_map }}
+  MESSAGE_TS: ${{ github.event.client_payload.thread_ts}}
+  NO_INPUT: "입력한 값이 없습니다"
+
 jobs:
-  test:
+  print-params:
     runs-on: ubuntu-latest
     steps:
       - name: 입력값 출력
@@ -12,10 +23,50 @@ jobs:
             "패치할 서버 리스트" "${IN:-$NO_INPUT}" \
             "도커 이미지 태그" "${TAG:-$NO_INPUT}" \
             "아레나 시뮬레이션 서버 이미지 태그" "${ARENA_TAG:-$NO_INPUT}" \
-            "스테틱 데이터 버젼" "${STATIC_DATA_VER:-$NO_INPUT}"
-        env:
-          IN: ${{ github.event.client_payload.list_of_servers_patched }}
-          TAG: ${{ github.event.client_payload.docker_image_tag }}
-          ARENA_TAG: ${{ github.event.client_payload.arena_simulation_server_image_tag }}
-          STATIC_DATA_VER: ${{ github.event.client_payload.static_data_version }}
-          NO_INPUT: "입력한 값이 없습니다"
+            "스테틱 데이터 버젼" "${STATIC_DATA_VER:-$NO_INPUT}" \
+            "CoreVersionMap" "${CORE_VERSION_MAP:-$NO_INPUT}" \
+            "DataPackVersionMap" "${DATA_PACK_VERSION_MAP:-$NO_INPUT}" \
+            "message_ts: 슬랙 채널에서 해당 워크플로우로 생성된 메세지의 timestamp(스레드에 메세지를 달기 위해 필요)" "${MESSAGE_TS:-$NO_INPUT}"
+
+  send-slack-message:
+    runs-on: ubuntu-latest
+    needs: print-params
+    env:
+      # #slack-app-dev의 channel ID
+      # TODO: 나중에 메세지를 보낼 채널로 변경
+      CHANNEL_ID: ${{ secrets.SLACK_GWANHO_DM_CHANNEL_ID }}
+      SLACK_NK_NOTI_BOT_TOKEN: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+
+    steps:
+      - name: 개인 DM 채널과 특정 메세지에 스레드 메세지 전송
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+          payload: |
+            {
+              "channel": "${{ env.CHANNEL_ID }}",
+              "thread_ts": "${{ env.MESSAGE_TS }}",
+              "text": "입력값 전송",
+              "replay_broadcast": true,
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "⚠️ *존재하지 않는 서버 이미지 혹은 스태틱 데이터가 입력되었습니다*"
+                  }
+                }
+                ${{ env.TAG && format(',{{ "type": "section", "text": {{ "type": "mrkdwn", "text": "{0} *서버 이미지 태그:* `{1}`" }} }}', steps.check-lobby.outcome == 'failure' && '❌' || '⭕', env.TAG) }}
+                ${{ env.ARENA_TAG && format(',{{ "type": "section", "text": {{ "type": "mrkdwn", "text": "{0} *아레나 시뮬레이션 서버 이미지 태그:* `{1}`" }} }}', steps.check-arena.outcome == 'failure' && '❌' || '⭕', env.ARENA_TAG) }}
+                ${{ env.STATIC_DATA_VER && format(',{{ "type": "section", "text": {{ "type": "mrkdwn", "text": "{0} *스태틱 데이터 버전:* `{1}`" }} }}', steps.check-static-data.outcome == 'failure' && '❌' || '⭕', env.STATIC_DATA_VER) }}
+                ,{
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|🔗 Run URL>"
+                  }
+                }
+              ]
+            }
+
