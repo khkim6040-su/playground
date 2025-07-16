@@ -1,0 +1,45 @@
+on:
+  repository_dispatch:
+    types: commit
+
+
+permissions:
+  contents: write
+  pull-requests: write
+
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Update README.md
+        run: |
+          echo "This is a test commit from the commit workflow." >> README.md
+          echo "Current date and time: $(date)" >> README.md
+
+      - name: Commit changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README.md via repository_dispatch"
+      - name: Push changes
+        id: push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          force: true
+          commit_message: "Update README.md via repository_dispatch"
+
+      - name: Get commit hash
+        run: |
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "Push step outputs: ${{ toJson(steps.push.outputs) }}"
+
+      - name: Make commit URL
+        run: |
+          echo "COMMIT_URL=${{ github.server_url }}/${{ github.repository }}/commit/${{ env.COMMIT_HASH }}" >> $GITHUB_ENV
