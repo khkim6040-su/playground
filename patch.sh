@@ -15,9 +15,19 @@ usage() {
   echo "--data-pack-version-maps    [Optional] data pack version map, only value pairs ex) 615-04b;615-04b-p1"
 }
 
+# 123123.123;exit;
+
 jq-inplace() {
   tmp=$(mktemp)
   jq "$@" > "$tmp" && mv "$tmp" "${@: -1}"
+}
+
+clear-core-version-map() {
+  jq-inplace '.Client.ResourceHosts.CoreVersionMap = {}' a/appsettings.json
+}
+
+clear-data-pack-version-map() {
+  jq-inplace '.Client.ResourceHosts.DataPackVersionMap = {}' a/appsettings.json
 }
 
 DOCKER_TAG=''
@@ -104,22 +114,24 @@ if [[ -n "$CLIENT_STATICDATA_VERSION" ]]; then
 fi
 
 if [[ -n "$CORE_VERSION_MAPS" ]]; then
+  clear-core-version-map
   jq-inplace '.Client.ResourceHosts.CoreVersionMap = {}' a/appsettings.json
   IFS=';' read -ra VALUES <<< "$CORE_VERSION_MAPS"
   # Extract key by splitting by first '-' and taking the first part
   for VALUE in "${VALUES[@]}"; do
     KEY="${VALUE%%-*}"
-    jq-inplace ".Client.ResourceHosts.CoreVersionMap.\"$KEY\" = \"$VALUE\"" a/appsettings.json
+    jq-inplace --arg key "$KEY" --arg value "$VALUE"  '.Client.ResourceHosts.CoreVersionMap += { ($key) : $value }' a/appsettings.json
   done
 fi
 
 if [[ -n "$DATA_PACK_VERSION_MAPS" ]]; then
+  clear-data-pack-version-map
   jq-inplace '.Client.ResourceHosts.DataPackVersionMap = {}' a/appsettings.json
   IFS=';' read -ra VALUES <<< "$DATA_PACK_VERSION_MAPS"
   # Extract key by splitting by first '-' and taking the first part
   for VALUE in "${VALUES[@]}"; do
     KEY="${VALUE%%-*}"
-    jq-inplace ".Client.ResourceHosts.DataPackVersionMap.\"$KEY\" = \"$VALUE\"" a/appsettings.json
+    jq-inplace --arg key "$KEY" --arg value "$VALUE"  '.Client.ResourceHosts.DataPackVersionMap += { ($key): $value }' a/appsettings.json
   done
 fi
 
