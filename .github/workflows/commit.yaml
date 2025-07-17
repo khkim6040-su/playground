@@ -47,7 +47,7 @@ jobs:
           git commit -m "$COMMIT_MESSAGE" || echo "커밋 실패: 변경 사항 없음 또는 충돌"
       - name: Push changes
         id: push
-        uses: ad-m/github-push-action@0.8.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
