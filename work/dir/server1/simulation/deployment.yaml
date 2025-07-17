@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulation
+spec:
+  replicas: 1
+  selector: {}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: "asdf"
+        prometheus.io/port: "7777"
+        prometheus.io/scrape: "true"
+        k8s.grafana.com/metrics.portNumber: "7777"
+        k8s.grafana.com/scrape: "true"
+    spec:
+      serviceAccountName: simulation
+      containers:
+        - name: app
+          image: gwanho-backend/simulation
+          env:
+            - name: WILLBEUPDATED
+              value: data/static-123
+          resources:
+            limits:
+              cpu: "400m"
+              memory: "2Gi"
+        - name: sidecar
+          image: gwanho-backend/simulation-sidecar
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "500Mi"
+          volumeMounts:
+            - mountPath: /app/appsettings.json
+              name: configmap
+              readOnly: true
+              subPath: appsettings.json
+            - mountPath: /app/paseto.json
+              name: paseto
+              readOnly: true
+              subPath: paseto.json
+      volumes:
+        - name: configmap
+          configMap:
+            name: sidecar-cm
+        - name: paseto
+          secret:
+            secretName: paseto
+      nodeSelector:
+        diskSize: large
+      tolerations:
+        - key: "diskSize"
+          value: "large"
+          effect: "NoSchedule"
