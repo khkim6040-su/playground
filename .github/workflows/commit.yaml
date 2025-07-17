@@ -45,8 +45,7 @@ jobs:
             스테틱 데이터 버전: ${{ env.STATIC_DATA_VER }}
             CoreVersionMap: ${{ env.CORE_VERSION_MAP }}
             DataPackVersionMap: ${{ env.DATA_PACK_VERSION_MAP }}
-            EOF
-          )
+            EOF)          
           git commit -m "$COMMIT_MESSAGE" || echo "커밋 실패: 변경 사항 없음 또는 충돌"
       - name: Push changes
         id: push
