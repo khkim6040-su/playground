@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
           payload: |
             {
-              "channel": "${{ env.CHANNEL_ID }}",
+              "channel": "${{ env.DM_CHANNEL_ID }}",
               "thread_ts": "${{ env.MESSAGE_TS }}",
               "text": "입력값 전송",
               "reply_broadcast": true,
