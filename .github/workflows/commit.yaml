@@ -37,13 +37,13 @@ jobs:
           git diff --quiet && echo "No changes to commit" && exit 0
           git add README.md
 
-          COMMIT_MESSAGE="[BOT] 서버 패치 커밋: ${{env.IN}}
+          COMMIT_MESSAGE="[BOT] 서버 패치 커밋: $IN
 
-          도커 이미지 태그: ${{env.TAG}}
-          아레나 시뮬레이션 서버 이미지 태그: ${{env.ARENA_TAG}}
-          스테틱 데이터 버전: ${{env.STATIC_DATA_VER}}
-          CoreVersionMap: ${{env.CORE_VERSION_MAP}}
-          DataPackVersionMap: ${{env.DATA_PACK_VERSION_MAP}}"     
+          도커 이미지 태그: $TAG
+          아레나 시뮬레이션 서버 이미지 태그: $ARENA_TAG
+          스테틱 데이터 버전: $STATIC_DATA_VER
+          CoreVersionMap: $CORE_VERSION_MAP
+          DataPackVersionMap: $DATA_PACK_VERSION_MAP"
           git commit -m "$COMMIT_MESSAGE"
       - name: Push changes
         id: push
