@@ -3,6 +3,16 @@ on:
     types: commit
 
 
+env:
+  IN: ${{ github.event.client_payload.list_of_servers_patched }}
+  TAG: ${{ github.event.client_payload.docker_image_tag }}
+  ARENA_TAG: ${{ github.event.client_payload.arena_simulation_server_image_tag }}
+  STATIC_DATA_VER: ${{ github.event.client_payload.static_data_version }}
+  CORE_VERSION_MAP: ${{ github.event.client_payload.core_version_map }}
+  DATA_PACK_VERSION_MAP: ${{ github.event.client_payload.data_pack_version_map }}
+  NO_INPUT: "입력한 값이 없습니다"
+
+
 permissions:
   contents: write
   pull-requests: write
@@ -24,8 +34,20 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet && echo "No changes to commit" && exit 0
           git add README.md
-          git commit -m "Update README.md via repository_dispatch"
+                    
+          COMMIT_MESSAGE=$(cat <<EOF
+            [BOT] 서버 패치 커밋: ${{ env.IN }} - ${GITHUB_SHA}
+
+            도커 이미지 태그: ${{ env.TAG }}
+            아레나 시뮬레이션 서버 이미지 태그: ${{ env.ARENA_TAG }}
+            스테틱 데이터 버전: ${{ env.STATIC_DATA_VER }}
+            CoreVersionMap: ${{ env.CORE_VERSION_MAP }}
+            DataPackVersionMap: ${{ env.DATA_PACK_VERSION_MAP }}
+            EOF
+          )
+          git commit -m "$COMMIT_MESSAGE" || echo "커밋 실패: 변경 사항 없음 또는 충돌"
       - name: Push changes
         id: push
         uses: ad-m/github-push-action@master
