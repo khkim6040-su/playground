@@ -37,7 +37,7 @@ jobs:
           git diff --quiet && echo "No changes to commit" && exit 0
           git add README.md
                     
-          COMMIT_MESSAGE="[BOT] 서버 패치 커밋: $IN - ${GITHUB_SHA}
+          COMMIT_MESSAGE="[BOT] 서버 패치 커밋: $IN
 
           도커 이미지 태그: $TAG
           아레나 시뮬레이션 서버 이미지 태그: $ARENA_TAG
