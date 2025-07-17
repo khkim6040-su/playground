@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="879c78ce-7b0f-4e97-a596-6cdc7fe538ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/patch.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/Electrode/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/Garchomp/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/Gengar/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/Gyarados/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/Magnemite/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/kustomization.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work/dir/server1/pikachu/deployment.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PerforceDirect.Settings">
+    <option name="SERVER_TIMEOUT" value="2147483000" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2zwNYKQOz0pDgfq7ZK7vRehzOlR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "C:\\Users\\SHIFTUP\\AppData\\Roaming\\JetBrains\\Rider2025.1\\plugins\\Shell Script\\shellcheck.exe",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Perforce",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="879c78ce-7b0f-4e97-a596-6cdc7fe538ca" name="Changes" comment="" />
+      <created>1752638222485</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1752638222485</updated>
+      <workItem from="1752638223646" duration="1815000" />
+      <workItem from="1752643337128" duration="1362000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+</project>
