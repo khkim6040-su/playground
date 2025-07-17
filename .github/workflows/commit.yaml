@@ -27,8 +27,8 @@ jobs:
       
       - name: Update README.md
         run: |
-          echo "This is a test commit from the commit workflow."
-          echo "Current date and time: $(date)"
+          echo "This is a test commit from the commit workflow." >> README.md
+          echo "Current date and time: $(date)" >> README.md
 
       - name: Commit changes
         run: |
