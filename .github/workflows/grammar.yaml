@@ -4,7 +4,7 @@ on:
       word:
         description: '단어를 입력하세요'
         required: true
-        default: 'Hello, World!'
+        default: 'Hell'
 
 env:
   WORD: ${{ github.event.inputs.word }}
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Check the word starts with 'Hello'
         id: check-word
-        if: ${{ env.WORD && startsWith(env.WORD, 'Hello') != true }} 
+        if: ${{ env.WORD && !startsWith(env.WORD, 'Hello') }} 
         run: |
           echo "The word does not start with 'Hello'."
 
@@ -24,6 +24,6 @@ jobs:
     steps:
       - name: Check the word starts with 'Hello'
         id: check-word
-        if: ${{ env.WORD && !startsWith(env.WORD, 'Hello') }} 
+        if: ${{ env.WORD }} && !startsWith(${{ env.WORD }}, 'Hello') 
         run: |
           echo "The word does not start with 'Hello'."
