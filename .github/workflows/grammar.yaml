@@ -11,6 +11,24 @@ env:
 
 jobs:
 
+  start_with_check_current_mine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if:  ${{ env.WORD }} && !startsWith( ${{ env.WORD }}, 'Hello') 
+        run: |
+          echo "The word does not start with 'Hello'."
+
+  start_with_check_current_mine_fixed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if:  ${{ env.WORD && !startsWith(env.WORD, 'Hello') }}
+        run: |
+          echo "The word does not start with 'Hello'."
+
   start_with_check_current:
     runs-on: ubuntu-latest
     steps:
@@ -69,3 +87,5 @@ jobs:
         run: |
           echo "The word does not start with 'Hello'."
 
+
+  
