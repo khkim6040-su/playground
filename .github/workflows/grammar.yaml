@@ -6,24 +6,34 @@ on:
         required: true
         default: 'Hell'
 
-env:
-  WORD: ${{ github.event.inputs.word }}
 
 jobs:
-  start_with_check1:
+
+  start_with_check_current:
     runs-on: ubuntu-latest
     steps:
       - name: Check the word starts with 'Hello'
         id: check-word
-        if: ${{ env.WORD && !startsWith(env.WORD, 'Hello') }} 
+        if:  inputs.word && !startsWith(inputs.word, 'Hello') 
         run: |
           echo "The word does not start with 'Hello'."
 
-  start_with_check2:
+  start_with_check_fixed:
     runs-on: ubuntu-latest
     steps:
       - name: Check the word starts with 'Hello'
         id: check-word
-        if: ${{ env.WORD }} && !startsWith(${{ env.WORD }}, 'Hello') 
+        if: ${{ inputs.word && !startsWith(inputs.word, 'Hello') }} 
+        run: |
+          echo "The word does not start with 'Hello'."
+
+
+
+    start_with_check_fixed2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if:  inputs.word && !(startsWith(inputs.word, 'Hello')) 
         run: |
           echo "The word does not start with 'Hello'."
