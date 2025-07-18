@@ -29,11 +29,11 @@ jobs:
 
 
 
-    start_with_check_fixed2:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check the word starts with 'Hello'
-          id: check-word
-          if:  inputs.word && !(startsWith(inputs.word, 'Hello')) 
-          run: |
-            echo "The word does not start with 'Hello'."
+  start_with_check_fixed2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if:  inputs.word && !(startsWith(inputs.word, 'Hello')) 
+        run: |
+          echo "The word does not start with 'Hello'."
