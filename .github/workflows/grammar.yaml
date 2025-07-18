@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       word:
-        description: '단어를 입력하세요'
+        description: '단어를 입력하세요, 비교 대상 단어는 Hello입니다.'
         required: true
         default: 'Hell'
 
