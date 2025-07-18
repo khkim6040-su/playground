@@ -6,6 +6,8 @@ on:
         required: true
         default: 'Hell'
 
+env: 
+  WORD: ${{ inputs.word }}
 
 jobs:
 
@@ -17,6 +19,15 @@ jobs:
         if:  inputs.word && !startsWith(inputs.word, 'Hello') 
         run: |
           echo "The word does not start with 'Hello'."
+    
+  start_with_check_current_env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if:  env.WORD && !startsWith(env.WORD, 'Hello') 
+        run: |
+          echo "The word does not start with 'Hello'."
 
   start_with_check_fixed:
     runs-on: ubuntu-latest
@@ -26,6 +37,16 @@ jobs:
         if: ${{ inputs.word && !startsWith(inputs.word, 'Hello') }} 
         run: |
           echo "The word does not start with 'Hello'."
+  
+  start_with_check_fixed_env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if: ${{ env.WORD && !startsWith(env.WORD, 'Hello') }} 
+        run: |
+          echo "The word does not start with 'Hello'."
+
 
 
 
@@ -37,3 +58,14 @@ jobs:
         if:  inputs.word && !(startsWith(inputs.word, 'Hello')) 
         run: |
           echo "The word does not start with 'Hello'."
+
+
+  start_with_check_fixed2_env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if: ${{ env.WORD && !startsWith(env.WORD, 'Hello') }} 
+        run: |
+          echo "The word does not start with 'Hello'."
+
