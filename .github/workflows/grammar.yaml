@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+    inputs:
+      word:
+        description: '단어를 입력하세요'
+        required: true
+        default: 'Hello, World!'
+
+env:
+  WORD: ${{ github.event.inputs.word }}
+
+jobs:
+  start_with_check1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if: ${{ env.WORD }} && startsWith(${{ env.WORD }}, 'Hello') != true 
+        run: |
+          echo "The word does not start with 'Hello'."
+
+  start_with_check2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the word starts with 'Hello'
+        id: check-word
+        if: ${{ env.WORD }} && !startsWith(${{ env.WORD }}, 'Hello') 
+        run: |
+          echo "The word does not start with 'Hello'."
