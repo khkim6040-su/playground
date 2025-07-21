@@ -35,20 +35,20 @@ jobs:
       - name: Sync with main branch
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            REMOTE_REPO="https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-            
-            MAX_RETRIES=5
-            COUNT=0
-            while ! git push "$REMOTE_REPO" "HEAD:main"; do 
-              if [ $COUNT -ge $MAX_RETRIES ]; then
-                echo "Failed to push changes after $MAX_RETRIES attempts."
-                exit 1
-              fi
-              COUNT=$((COUNT + 1))
-              echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
-              sleep 5
-            done
+        run: |
+          REMOTE_REPO="https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          
+          MAX_RETRIES=5
+          COUNT=0
+          while ! git push "$REMOTE_REPO" "HEAD:main"; do 
+            if [ $COUNT -ge $MAX_RETRIES ]; then
+              echo "Failed to push changes after $MAX_RETRIES attempts."
+              exit 1
+            fi
+            COUNT=$((COUNT + 1))
+            echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
+            sleep 5
+          done
 
       - name: Push changes
         id: push
