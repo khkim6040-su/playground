@@ -1,4 +1,4 @@
-name: triggered-after-commit-on-main
+name: triggered-after-commit-on-main-workflow-run
 on:
   workflow_run:
     workflows: ["Commit Workflow"]

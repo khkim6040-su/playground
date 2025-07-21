@@ -1,0 +1,46 @@
+name: triggered-after-commit-on-main-pat-token
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  edit-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update README.md
+        run: |
+          echo "This is a test commit from the **edit-readme workflow**." > README.md
+          echo "Current date and time: $(date)" >> README.md
+
+      - name: Commit changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet && echo "No changes to commit" && exit 0
+          git add README.md
+
+          COMMIT_MESSAGE="[BOT] README 업데이트"
+          git commit -m "$COMMIT_MESSAGE"
+
+      - name: Push changes
+        id: push
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+      - name: Get commit hash
+        run: |
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "Push step outputs: ${{ toJson(steps.push.outputs) }}"
+
+      - name: Make commit URL
+        run: |
+          echo "COMMIT_URL=${{ github.server_url }}/${{ github.repository }}/commit/${{ env.COMMIT_HASH }}" >> $GITHUB_ENV
