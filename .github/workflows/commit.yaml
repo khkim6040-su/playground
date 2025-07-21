@@ -1,3 +1,4 @@
+name: Commit Workflow
 on:
   repository_dispatch:
     types: commit

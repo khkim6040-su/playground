@@ -1,8 +1,9 @@
-name: main 브랜치에 커밋이 발생했을 때 README.md 수정하는 워크플로우
+name: triggered-after-commit-on-main
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Commit Workflow"]
+    types:
+      - completed
 
 permissions:
   contents: write
