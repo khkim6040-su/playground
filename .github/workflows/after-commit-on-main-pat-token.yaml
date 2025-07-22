@@ -13,21 +13,21 @@ jobs:
         with:
           token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }} # 여기 PAT 토큰을 사용해야 github bot이 main에 커밋을 할 수 있음
 
-      - name: Update BOT.md
-        if: "!contains(github.event.head_commit.message, '[BOT] BOT.md 업데이트')" # 무한루프 방지
+      - name: Update BOT1.md
+        if: "!contains(github.event.head_commit.message, '[BOT] BOT1.md 업데이트')" # 무한루프 방지
         run: |
-          echo "This is a test commit from the **edit-BOT-after-commit-on-main workflow**." > BOT.md
-          echo "Current date and time: $(date)" >> BOT.md
-          cat BOT.md
+          echo "This is a test commit from the **edit-BOT-after-commit-on-main workflow**." > BOT1.md
+          echo "Current date and time: $(date)" >> BOT1.md
+          cat BOT1.md
 
       - name: Commit changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet && echo "No changes to commit" && exit 0
-          git add BOT.md
+          git add BOT1.md
 
-          COMMIT_MESSAGE="[BOT] BOT.md 업데이트"
+          COMMIT_MESSAGE="[BOT] BOT1.md 업데이트"
           git commit -m "$COMMIT_MESSAGE"
           sleep 20
 
