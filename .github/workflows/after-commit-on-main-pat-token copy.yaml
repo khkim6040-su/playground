@@ -2,7 +2,8 @@ name: after-commit-on-main-pat-token
 on:
   push:
     branches:
-      - main
+      # - main
+      - not-exist-branch 
 
 jobs:
   edit-readme:
