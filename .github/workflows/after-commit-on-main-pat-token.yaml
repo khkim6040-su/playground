@@ -1,4 +1,4 @@
-name: triggered-after-commit-on-main-pat-token
+name: after-commit-on-main-pat-token
 on:
   push:
     branches:
@@ -14,19 +14,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update README.md
+      - name: Update Bot.md
         run: |
-          echo "This is a test commit from the **edit-readme-after-commit-on-main workflow**." > README.md
-          echo "Current date and time: $(date)" >> README.md
+          echo "This is a test commit from the **edit-Bot-after-commit-on-main workflow**." > Bot.md
+          echo "Current date and time: $(date)" >> Bot.md
 
       - name: Commit changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet && echo "No changes to commit" && exit 0
-          git add README.md
+          git add Bot.md
 
-          COMMIT_MESSAGE="[BOT] README 업데이트"
+          COMMIT_MESSAGE="[BOT] Bot.md 업데이트"
           git commit -m "$COMMIT_MESSAGE"
 
       - name: Push changes

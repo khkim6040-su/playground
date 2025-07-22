@@ -1,4 +1,4 @@
-name: triggered-after-commit-on-main-workflow-run
+name: after-commit-on-main-workflow-run
 on:
   workflow_run:
     workflows: ["Commit Workflow1"]
@@ -9,25 +9,25 @@ permissions:
   contents: write
 
 jobs:
-  edit-readme:
+  edit-bot-md:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update README.md
+      - name: Update BOT.md
         run: |
-          echo "This is a test commit from the **edit-readme-after-specific-workflow-run workflow**." > README.md
-          echo "Current date and time: $(date)" >> README.md
+          echo "This is a test commit from the **edit-bot-md-after-specific-workflow-run workflow**." > BOT.md
+          echo "Current date and time: $(date)" >> BOT.md
 
       - name: Commit changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet && echo "No changes to commit" && exit 0
-          git add README.md
+          git add BOT.md
 
-          COMMIT_MESSAGE="[BOT] README 업데이트"
+          COMMIT_MESSAGE="[BOT] BOT.md 업데이트"
           git commit -m "$COMMIT_MESSAGE"
 
           sleep 10

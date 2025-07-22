@@ -26,17 +26,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Update README.md
+      - name: Update BOT.md
         run: |
-          echo "This is a test commit from the **commit workflow**." > README.md
-          echo "Current date and time: $(date)" >> README.md
+          echo "This is a test commit from the **commit workflow**." > BOT.md
+          echo "Current date and time: $(date)" >> BOT.md
 
       - name: Commit changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet && echo "No changes to commit" && exit 0
-          git add README.md
+          git add BOT.md
 
           COMMIT_MESSAGE="[BOT] 서버 패치 커밋: $IN
 
