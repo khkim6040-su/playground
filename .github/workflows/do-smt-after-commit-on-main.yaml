@@ -1,4 +1,4 @@
-name: after-commit-on-main-pat-token
+name: do-smt-after-commit-on-main
 on:
   push:
     branches:
@@ -15,5 +15,5 @@ jobs:
 
       - name: Do something 
         run: |
-          echo "Do SOMETHING!!"
-          echo "Done"
+          echo "Print BOT.md to see it has the most recent changes"
+          cat BOT.md
