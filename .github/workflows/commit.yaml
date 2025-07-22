@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "This is a test commit from the **commit workflow**." > BOT.md
           echo "Current date and time: $(date)" >> BOT.md
-          cat <<EOF >> BOT.md
+          cat BOT.md
 
       - name: Commit changes
         run: |
