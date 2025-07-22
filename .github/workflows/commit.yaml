@@ -48,11 +48,26 @@ jobs:
           CoreVersionMap: $CORE_VERSION_MAP
           DataPackVersionMap: $DATA_PACK_VERSION_MAP"
           git commit -m "$COMMIT_MESSAGE"
+          sleep 20
+          
       - name: Push changes
         id: push
-        uses: ad-m/github-push-action@v0.8.0
-        with:
-          branch: main
+        env: 
+          TARGET_BRANCH: main 
+        run: |
+          REMOTE_REPO="https://oauth2:${{ secrets.TRIGGER_COMMIT_ON_MAIN }}@github.com/${{ github.repository }}.git"
+
+          MAX_RETRIES=5
+          COUNT=0
+          while ! git push "$REMOTE_REPO" "HEAD:$TARGET_BRANCH"; do 
+            if [ $COUNT -ge $MAX_RETRIES ]; then
+              echo "Failed to push changes after $MAX_RETRIES attempts."
+              exit 1
+            fi
+            COUNT=$((COUNT + 1))
+            echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
+            sleep 5
+          done
 
       - name: Get commit hash
         run: |

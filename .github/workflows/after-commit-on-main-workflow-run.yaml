@@ -32,15 +32,16 @@ jobs:
 
           sleep 10
 
-      - name: Sync with main branch
+      - name: Push changes
+        id: push
         env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_BRANCH: main 
         run: |
-          REMOTE_REPO="https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-          
+          REMOTE_REPO="https://oauth2:${{ secrets.TRIGGER_COMMIT_ON_MAIN }}@github.com/${{ github.repository }}.git"
+
           MAX_RETRIES=5
           COUNT=0
-          while ! git push "$REMOTE_REPO" "HEAD:main"; do 
+          while ! git push "$REMOTE_REPO" "HEAD:$TARGET_BRANCH"; do 
             if [ $COUNT -ge $MAX_RETRIES ]; then
               echo "Failed to push changes after $MAX_RETRIES attempts."
               exit 1
@@ -49,14 +50,7 @@ jobs:
             echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
             sleep 5
           done
-
-      - name: Push changes
-        id: push
-        uses: ad-m/github-push-action@v0.8.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-
+          
       - name: Get commit hash
         run: |
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
