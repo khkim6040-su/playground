@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }} # 여기 PAT 토큰을 사용해야 github bot이 main에 커밋을 할 수 있음
+          
 
       - name: Update BOT.md
         run: |
