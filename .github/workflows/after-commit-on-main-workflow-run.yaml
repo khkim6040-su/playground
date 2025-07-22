@@ -1,7 +1,7 @@
 name: after-commit-on-main-workflow-run
 on:
   workflow_run:
-    workflows: ["Commit Workflow1"]
+    workflows: ["Commit Workflow"]
     types:
       - completed
 
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
 
       - name: Update BOT.md
         run: |
