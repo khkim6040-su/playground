@@ -49,7 +49,7 @@ jobs:
           DataPackVersionMap: $DATA_PACK_VERSION_MAP"
           git commit -m "$COMMIT_MESSAGE"
           sleep 20
-          
+
       - name: Push changes
         id: push
         env: 
@@ -66,6 +66,7 @@ jobs:
             fi
             COUNT=$((COUNT + 1))
             echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
+            git pull --rebase origin main
             sleep 5
           done
 

@@ -48,9 +48,10 @@ jobs:
             fi
             COUNT=$((COUNT + 1))
             echo "Push failed, retrying... ($COUNT/$MAX_RETRIES)"
+            git pull --rebase origin main
             sleep 5
           done
-          
+
       - name: Get commit hash
         run: |
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
