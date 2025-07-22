@@ -4,10 +4,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   edit-readme:
     runs-on: ubuntu-latest
@@ -21,6 +17,7 @@ jobs:
         run: |
           echo "This is a test commit from the **edit-Bot-after-commit-on-main workflow**." > Bot.md
           echo "Current date and time: $(date)" >> Bot.md
+          cat <<EOF >> Bot.md
 
       - name: Commit changes
         run: |
