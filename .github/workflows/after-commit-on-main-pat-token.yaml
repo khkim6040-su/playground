@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
 
       - name: Update BOT.md
         if: "!contains(github.event.head_commit.message, '[BOT] BOT.md 업데이트')" # 무한루프 방지

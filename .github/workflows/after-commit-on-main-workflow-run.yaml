@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
 
       - name: Update BOT.md
         run: |
