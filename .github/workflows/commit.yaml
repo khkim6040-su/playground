@@ -26,7 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          credentials: false
+          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
       
       - name: Update BOT.md
         run: |
