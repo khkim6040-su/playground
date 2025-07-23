@@ -26,7 +26,7 @@ jobs:
         run: |
           if git diff --quiet; then
             echo "Skip other steps"
-            gh run cancel $ {{ github.run_id }}
+            gh run cancel ${{ github.run_id }}
             gh run watch ${{ github.run_id }} 
           fi
 
