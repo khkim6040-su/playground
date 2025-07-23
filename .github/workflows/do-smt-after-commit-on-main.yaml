@@ -17,3 +17,8 @@ jobs:
         run: |
           echo "Print BOT.md to see it has the most recent changes"
           cat BOT.md
+
+      - name: diff --quiet
+        run: |
+          git diff --quiet && echo "No changes to commit" && exit 1
+          echo "There are changes to commit"
