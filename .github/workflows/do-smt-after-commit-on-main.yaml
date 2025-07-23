@@ -20,16 +20,6 @@ jobs:
           cat BOT.md
           echo "did_something=true" >> $GITHUB_OUTPUT
 
-      - name: diff --quiet
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TRIGGER_PAT }}
-        run: |
-          if git diff --quiet; then
-            echo "Skip other steps"
-            gh run cancel ${{ github.run_id }}
-            gh run watch ${{ github.run_id }} 
-          fi
-
       - name: Check it did something
         id: check-did-something
         if: steps.do-something.outputs.did_something == 'false'
