@@ -28,6 +28,6 @@ jobs:
           fi
 
       - name: Check it did something
-        if: steps.do-something.did_something == 'true'
+        if: steps.do-something.outputs.did_something == 'true'
         run: |
           echo "It did something, so we can proceed with the commit."
