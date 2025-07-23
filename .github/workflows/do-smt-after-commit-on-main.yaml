@@ -20,5 +20,7 @@ jobs:
 
       - name: diff --quiet
         run: |
-          git diff --quiet && echo "No changes to commit" && exit 1
-          echo "There are changes to commit"
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
