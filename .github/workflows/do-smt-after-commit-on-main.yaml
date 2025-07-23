@@ -14,9 +14,11 @@ jobs:
           token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }} # 여기 PAT 토큰을 사용해야 github bot이 main에 커밋을 할 수 있음
 
       - name: Do something 
+        id: do-something
         run: |
           echo "Print BOT.md to see it has the most recent changes"
           cat BOT.md
+          echo "did_something=true" >> $GITHUB_OUTPUT
 
       - name: diff --quiet
         run: |
@@ -24,3 +26,8 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
+
+      - name: Check it did something
+        if: steps.do-something.did_something == 'true'
+        run: |
+          echo "It did something, so we can proceed with the commit."
