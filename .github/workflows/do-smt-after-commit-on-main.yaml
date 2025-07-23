@@ -31,8 +31,15 @@ jobs:
           fi
 
       - name: Check it did something
-        if: steps.do-something.outputs.did_something == 'true'
+        id: check-did-something
+        if: steps.do-something.outputs.did_something == 'false'
         run: |
           echo "It did something, so we can proceed with the commit."
+
+      - name: Check if it did not something
+        id: check-did-not-something
+        if: steps.check-did-something.outcome == 'success'
+        run: |
+          echo "It did do something, so we will proceed with the commit."
 
 
