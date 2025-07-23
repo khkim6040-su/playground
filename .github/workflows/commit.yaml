@@ -44,11 +44,6 @@ jobs:
           DataPackVersionMap: $DATA_PACK_VERSION_MAP"
           git commit -m "$COMMIT_MESSAGE"
           sleep 20
-
-  push:
-    runs-on: ubuntu-latest
-    needs: commit
-    steps:
       - name: Push changes
         id: push
         env: 
