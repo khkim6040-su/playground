@@ -27,9 +27,13 @@ jobs:
           echo "It did something, so we can proceed with the commit."
 
       - name: Check if it did not something
-        id: check-did-not-something
         if: steps.check-did-something.outcome == 'success'
         run: |
           echo "It did do something, so we will proceed with the commit."
+
+      - name: Check if it skipped
+        if: steps.check-did-something.outcome == 'skipped'
+        run: |
+          echo "It did not do something, so we will skip the commit."
 
 
