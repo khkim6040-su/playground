@@ -15,12 +15,15 @@ env:
 
 jobs:
   commit:
+    env:
+      TARGET_BRANCH: main
+      PAT_TOKEN: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
+          token: $PAT_TOKEN
       
       - name: Update BOT.md
         run: |
@@ -46,10 +49,8 @@ jobs:
           sleep 20
       - name: Push changes
         id: push
-        env: 
-          TARGET_BRANCH: main 
         run: |
-          REMOTE_REPO="https://oauth2:${{ secrets.TRIGGER_COMMIT_ON_MAIN }}@github.com/${{ github.repository }}.git"
+          REMOTE_REPO="https://oauth2:${ PAT_TOKEN }@github.com/${{ github.repository }}.git"
 
           MAX_RETRIES=5
           for COUNT in $(seq 1 $MAX_RETRIES); do
