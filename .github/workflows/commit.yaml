@@ -23,8 +23,43 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
-      
-      - name: Update BOT.md
+      - name: Check CoreVersionMap 
+        if: ${{ env.CORE_VERSION_MAP }}
+        id: check_core_version_map
+        run: |
+          IFS=';' read -ra VALS <<< "${{ env.CORE_VERSION_MAP }}"
+          for VAL in "${VALS[@]}"; do 
+            if [[ "$VAL" != *-* ]]; then 
+              echo "CoreVersionMap의 입력값 중 '-'이 포함되지 않은 값이 있습니다: $VAL"
+              exit 1
+            fi
+          done
+
+          keys=$(echo "${{ env.CORE_VERSION_MAP }}" | tr ';' '\n' | sed 's/-.*//')
+          duplicates=$(echo "$keys" | sort | uniq -d)
+          if [ -n "$duplicates" ]; then
+            echo "CoreVersionMap에 중복된 키가 있습니다: $duplicates"
+            exit 1
+          fi
+      - name: Check DataPackVersionMap
+        if: ${{ env.DATA_PACK_VERSION_MAP }}
+        id: check_data_pack_version_map
+        run: |
+          IFS=';' read -ra VALS <<< "${{ env.DATA_PACK_VERSION_MAP }}"
+          for VAL in "${VALS[@]}"; do 
+            if [[ "$VAL" != *-* ]]; then 
+              echo "DataPackVersionMap의 입력값 중 '-'이 포함되지 않은 값이 있습니다: $VAL"
+              exit 1
+            fi
+          done
+
+          keys=$(echo "${{ env.DATA_PACK_VERSION_MAP }}" | tr ';' '\n' | sed 's/-.*//')
+          duplicates=$(echo "$keys" | sort | uniq -d)
+          if [ -n "$duplicates" ]; then
+            echo "DataPackVersionMap에 중복된 키가 있습니다: $duplicates"
+            exit 1
+          fi
+
         run: |
           echo "This is a test commit from the **commit workflow**." > BOT.md
           echo "Current date and time: $(date)" >> BOT.md
