@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: $PAT_TOKEN
+          token: ${{ env.PAT_TOKEN }}
       
       - name: Update BOT.md
         run: |
