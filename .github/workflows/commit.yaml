@@ -50,7 +50,7 @@ jobs:
       - name: Push changes
         id: push
         run: |
-          REMOTE_REPO="https://oauth2:${ PAT_TOKEN }@github.com/${{ github.repository }}.git"
+          REMOTE_REPO="https://oauth2:${PAT_TOKEN}@github.com/${{ github.repository }}.git"
 
           MAX_RETRIES=5
           for COUNT in $(seq 1 $MAX_RETRIES); do
