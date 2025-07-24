@@ -23,42 +23,34 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
-      - name: Check CoreVersionMap 
-        if: ${{ env.CORE_VERSION_MAP }}
-        id: check_core_version_map
+      - name: Check maps
+        if: ${{ env.CORE_VERSION_MAP && env.DATA_PACK_VERSION_MAP }}
+        id: check_maps
         run: |
-          IFS=';' read -ra VALS <<< "${{ env.CORE_VERSION_MAP }}"
-          for VAL in "${VALS[@]}"; do 
-            if [[ "$VAL" != *-* ]]; then 
-              echo "CoreVersionMap의 입력값 중 '-'이 포함되지 않은 값이 있습니다: $VAL"
+          check_map() {
+            local name="$1"
+            local map="$2"
+
+            # 하이픈 '-' 포함 여부 확인
+            IFS=';' read -ra VALUES <<< "$map"
+            for VALUE in "${VALUES[@]}"; do
+              if [[ ! "$VALUE" =~ - ]]; then
+                echo "오류: $name에 하이픈 '-'이 포함되지 않은 값이 있습니다: $VALUE"
+                exit 1
+              fi
+            done
+
+            # 중복된 키 확인
+            keys=$(echo "$map" | tr ';' '\n' | sed 's/-.*//')
+            duplicates=$(echo "$keys" | sort | uniq -d)
+            if [[ -n "$duplicates" ]]; then
+              echo "오류: $name에 중복된 키가 있습니다: $duplicates"
               exit 1
             fi
-          done
+          }
 
-          keys=$(echo "${{ env.CORE_VERSION_MAP }}" | tr ';' '\n' | sed 's/-.*//')
-          duplicates=$(echo "$keys" | sort | uniq -d)
-          if [ -n "$duplicates" ]; then
-            echo "CoreVersionMap에 중복된 키가 있습니다: $duplicates"
-            exit 1
-          fi
-      - name: Check DataPackVersionMap
-        if: ${{ env.DATA_PACK_VERSION_MAP }}
-        id: check_data_pack_version_map
-        run: |
-          IFS=';' read -ra VALS <<< "${{ env.DATA_PACK_VERSION_MAP }}"
-          for VAL in "${VALS[@]}"; do 
-            if [[ "$VAL" != *-* ]]; then 
-              echo "DataPackVersionMap의 입력값 중 '-'이 포함되지 않은 값이 있습니다: $VAL"
-              exit 1
-            fi
-          done
-
-          keys=$(echo "${{ env.DATA_PACK_VERSION_MAP }}" | tr ';' '\n' | sed 's/-.*//')
-          duplicates=$(echo "$keys" | sort | uniq -d)
-          if [ -n "$duplicates" ]; then
-            echo "DataPackVersionMap에 중복된 키가 있습니다: $duplicates"
-            exit 1
-          fi
+          [ -n "$CORE_VERSION_MAP" ] && check_map "CoreVersionMap" "$CORE_VERSION_MAP"
+          [ -n "$DATA_PACK_VERSION_MAP" ] && check_map "DataPackVersionMap" "$DATA_PACK_VERSION_MAP"
 
       - name: Update BOT.md
         run: |
