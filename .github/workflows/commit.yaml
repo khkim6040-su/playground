@@ -81,7 +81,6 @@ jobs:
           CoreVersionMap: $CORE_VERSION_MAP
           DataPackVersionMap: $DATA_PACK_VERSION_MAP"
           git commit -m "$COMMIT_MESSAGE"
-          sleep 20
       - name: Push changes
         id: push
         run: |
