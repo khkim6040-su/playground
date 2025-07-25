@@ -46,8 +46,9 @@ jobs:
       - name: Final check
         if: ${{ steps.check-core-version-map.outcome == 'failure' || steps.check-data-pack-version-map.outcome == 'failure' }}
         run: |
-          ${{ steps.check-core-version-map.outcome == 'failure' && steps.check-core-version-map.outputs.error || 'no-error-on-coreVersionMap' }}
-          ${{ steps.check-data-pack-version-map.outcome == 'failure' && steps.check-data-pack-version-map.outputs.error || 'no-error-on-dataPackVersionMap' }}
+          ${{ format('CoreVersionMap: {0}, DataPackVersionMap: {1}', 
+          steps.check-core-version-map.outcome == 'failure' && steps.check-core-version-map.outputs.error || 'no-error-on-coreVersionMap', 
+          steps.check-data-pack-version-map.outcome == 'failure' && steps.check-data-pack-version-map.outputs.error || 'no-error-on-dataPackVersionMap') }}
           exit 1
       - name: Update BOT.md
         run: |
