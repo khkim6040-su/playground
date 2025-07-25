@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import sys
 
 def check_map_data():
     parser = argparse.ArgumentParser()
@@ -31,3 +32,7 @@ def check_map_data():
 
     # 에러 없으면 빈 출력으로 정상 종료
     return 0
+
+
+if __name__ == "__main__":
+    check_map_data()
