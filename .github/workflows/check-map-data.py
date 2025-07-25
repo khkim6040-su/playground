@@ -13,7 +13,7 @@ def check_map_data():
 
     # 데이터 없으면 그냥 통과
     if not data:
-        return 0
+        return
 
     values = data.split(";")
 
@@ -21,17 +21,17 @@ def check_map_data():
     for value in values:
         if "-" not in value:
             print(f"입력된 {name}에 하이픈 '-'이 포함되지 않은 값이 있습니다: {value}")
-            return 1
+            return
 
     # 중복 키 체크 (첫 하이픈 앞 부분만 키로 사용)
     keys = [v.split("-", 1)[0] for v in values]
     duplicates = set(k for k in keys if keys.count(k) > 1)
     if duplicates:
         print(f"입력된 {name}에 중복된 키가 있습니다: {','.join(duplicates)}")
-        return 1
+        return
 
     # 에러 없으면 빈 출력으로 정상 종료
-    return 0
+    return
 
 
 if __name__ == "__main__":
