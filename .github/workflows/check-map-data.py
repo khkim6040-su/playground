@@ -4,8 +4,8 @@ import sys
 
 def check_map_data():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-name", required=True, help="데이터 이름 (CoreVersionMap 등)")
-    parser.add_argument("-data", required=True, help="세미콜론(;)으로 구분된 값 리스트")
+    parser.add_argument("--name", required=True, help="데이터 이름 (CoreVersionMap 등)")
+    parser.add_argument("--data", required=True, help="세미콜론(;)으로 구분된 값 리스트")
     args = parser.parse_args()
 
     name = args.name
