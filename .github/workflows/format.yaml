@@ -17,6 +17,15 @@ env:
   INNER_VAR: ${{ github.event.inputs.var2 }}
 
 jobs:
+  make-output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make output
+        run: |
+          echo "output=한글깨지나?" >> $GITHUB_OUTPUT
   format:
     runs-on: ubuntu-latest
     steps:
@@ -25,4 +34,4 @@ jobs:
 
       - name: a format inside a format
         run: |
-          echo "${{ format('바깥 format 값: {0}, {1}', env.OUTER_VAR, format('안쪽 format 값: {0}', env.INNER_VAR)) }}"
+          echo "${{ format('바깥 format 값: {0}, {1}', env.OUTER_VAR, format('안쪽 format 값: {0} Output 값: {1}', env.INNER_VAR, steps.make-output.outputs.output)) }}"
