@@ -23,8 +23,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TRIGGER_COMMIT_ON_MAIN }}
-      - name: Check ore version map
-        id: check-ore-version-map
+      - name: Check core version map
+        id: check-core-version-map
         if: ${{ env.CORE_VERSION_MAP }}
         continue-on-error: true
         run: |
