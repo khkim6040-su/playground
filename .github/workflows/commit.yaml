@@ -44,9 +44,10 @@ jobs:
             exit 1
           fi
       - name: Final check
-        if: ${{ steps.check-ore-version-map.outcome == 'failure' || steps.check-data-pack-version-map.outcome == 'failure' }}
+        if: ${{ steps.check-core-version-map.outcome == 'failure' || steps.check-data-pack-version-map.outcome == 'failure' }}
         run: |
-          echo "One or more checks failed. Exiting workflow."
+          ${{ steps.check-core-version-map.outcome == 'failure' && steps.check-core-version-map.outputs.error || 'no-error-on-coreVersionMap' }}
+          ${{ steps.check-data-pack-version-map.outcome == 'failure' && steps.check-data-pack-version-map.outputs.error || 'no-error-on-dataPackVersionMap' }}
           exit 1
       - name: Update BOT.md
         run: |
