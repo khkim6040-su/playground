@@ -25,4 +25,4 @@ jobs:
 
       - name: a format inside a format
         run: |
-          ${{ echo format('바깥 format {0} {1}', format('안쪽 format {0}', env.INNER_VAR), env.OUTER_VAR) }}
+          echo "${{ format('바깥 format {0} {1}', format('안쪽 format {0}', env.INNER_VAR), env.OUTER_VAR) }}"
