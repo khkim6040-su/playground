@@ -28,7 +28,7 @@ jobs:
         if: ${{ env.CORE_VERSION_MAP }}
         continue-on-error: true
         run: |
-          error=$(python3 .github/workflows/check-map-data.py -name "CoreVersionMap" -data "${{ env.CORE_VERSION_MAP }}")
+          error=$(python3 .github/workflows/check-map-data.py --name "CoreVersionMap" --data "${{ env.CORE_VERSION_MAP }}")
           if [ -n "$error" ]; then
             echo "error=$error" >> $GITHUB_OUTPUT
             exit 1
@@ -38,7 +38,7 @@ jobs:
         if: ${{ env.DATA_PACK_VERSION_MAP }}
         continue-on-error: true
         run: |
-          error=$(python3 .github/workflows/check-map-data.py -name "DataPackVersionMap" -data "${{ env.DATA_PACK_VERSION_MAP }}")
+          error=$(python3 .github/workflows/check-map-data.py --name "DataPackVersionMap" --data "${{ env.DATA_PACK_VERSION_MAP }}")
           if [ -n "$error" ]; then
             echo "error=$error" >> $GITHUB_OUTPUT
             exit 1
