@@ -25,7 +25,7 @@ jobs:
 
       - name: Make output
         run: |
-          echo "output=한글깨지나?" >> $GITHUB_OUTPUT
+          echo "output=한글깨지나?" >> "$GITHUB_OUTPUT"
   format:
     runs-on: ubuntu-latest
     steps:
