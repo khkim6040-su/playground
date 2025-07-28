@@ -6,7 +6,7 @@ on:
     types:
       - closed
   workflow_run:
-    workflows: ["after-commit-workflow"]
+    workflows: ["Commit Workflow"]
     types:
       - completed
 
