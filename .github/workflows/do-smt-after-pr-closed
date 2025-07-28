@@ -1,4 +1,4 @@
-name: do-smt-after-commit-on-main
+name: do-smt-after-pr-closed
 on:
   pull_request:
     branches:
