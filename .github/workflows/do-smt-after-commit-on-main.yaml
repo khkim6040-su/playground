@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  edit-readme:
+  do-something-after-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -35,5 +35,15 @@ jobs:
         if: steps.check-did-something.outcome == 'skipped'
         run: |
           echo "It did not do something, so we will skip the commit."
+
+      - name: Print github.sha
+        run: |
+          echo "github.sha: ${{ github.sha }}"
+          echo "-----------------------------------"
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.repository: ${{ github.repository }}"
+          echo "github.run_id: ${{ github.run_id }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.workflow: ${{ github.workflow }}"
 
 
