@@ -24,3 +24,4 @@ jobs:
           echo "github.run_id: ${{ github.run_id }}"
           echo "github.actor: ${{ github.actor }}"
           echo "github.workflow: ${{ github.workflow }}"
+          
