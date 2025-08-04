@@ -19,6 +19,10 @@ inputs:
     description: "스레드 댓글을 달 메세지의 타임스탬프. channel_id와 함께 사용되어야 함"
     type: string
     required: false
+  token:
+    description: "슬랙 봇 토큰"
+    type: string
+    required: true
 
 runs:
   using: "composite"
@@ -78,7 +82,7 @@ runs:
       uses: slackapi/slack-github-action@v2.0.0
       with:
         method: chat.postMessage
-        token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+        token: ${{ inputs.token }}
         payload: |
           {
             "channel": "${{ inputs.channel_id }}",
