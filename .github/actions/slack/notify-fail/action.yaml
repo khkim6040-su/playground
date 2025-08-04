@@ -1,5 +1,6 @@
 name: "send fail slack notification"
 description: "Send fail slack notification"
+
 inputs:
   message:
     description: "추가 메시지"
@@ -7,7 +8,6 @@ inputs:
     required: false
     default: ""
   channel:
-    # https://api.slack.com/apps/A08HQBJ3L66/incoming-webhooks 에서 보낼 수 있는 채널 목록 확인 가능
     description: "어느 채널에 보낼 지 incomming webhook url"
     type: string
     required: false
@@ -34,14 +34,14 @@ runs:
       shell: bash
       env:
         repository: ${{ github.repository }}
-        workflow: ${{ github.workflow }}
-        sha: ${{ github.sha }}
-        ref: ${{ github.ref }}
-        actor: ${{ github.actor }}
-        run_id: ${{ github.run_id }}
+        workflow: "test_workflow"
+        sha: "test_sha"
+        ref: "test_ref"
+        actor: "test_actor"
+        run_id: "test_run_id"
         extra_message: ${{ inputs.message }}
         # 워크플로우가 push event로 트리거된 경우에만 이 경로로 커밋 메시지가 들어옴
-        commit_message: ${{ github.event.head_commit.message }}
+        commit_message: "test_commit_message"
 
       run: |
         python .github/actions/slack/main.py \
@@ -53,6 +53,8 @@ runs:
           --actor "$actor" \
           --run-id "$run_id" \
           --commit-msg "$commit_message" \
+          --channel_id "${{ inputs.channel_id }}" \
+          --thread-ts "${{ inputs.thread_ts }}" \
           --extra-msg "$extra_message" > payload.json
 
         echo "::group::debug payload (cat)"
