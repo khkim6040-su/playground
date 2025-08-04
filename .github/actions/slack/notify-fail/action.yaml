@@ -1,0 +1,101 @@
+name: "send fail slack notification"
+description: "Send fail slack notification"
+inputs:
+  message:
+    description: "추가 메시지"
+    type: string
+    required: false
+    default: ""
+  channel:
+    # https://api.slack.com/apps/A08HQBJ3L66/incoming-webhooks 에서 보낼 수 있는 채널 목록 확인 가능
+    description: "어느 채널에 보낼 지 incomming webhook url"
+    type: string
+    required: false
+  channel_id:
+    description: "보낼 채널의 ID"
+    type: string
+    required: false
+  thread_ts:
+    description: "스레드 댓글을 달 메세지의 타임스탬프. channel_id와 함께 사용되어야 함"
+    type: string
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Validate inputs
+      if: ${{ !(inputs.channel != '' || (inputs.channel_id != '' && inputs.thread_ts != '')) }}
+      shell: bash
+      run: |
+        echo "Either 'channel' or 'channel_id' and 'thread_ts' must be provided."
+        exit 1
+
+    - name: Build payload
+      shell: bash
+      env:
+        repository: ${{ github.repository }}
+        workflow: ${{ github.workflow }}
+        sha: ${{ github.sha }}
+        ref: ${{ github.ref }}
+        actor: ${{ github.actor }}
+        run_id: ${{ github.run_id }}
+        extra_message: ${{ inputs.message }}
+        # 워크플로우가 push event로 트리거된 경우에만 이 경로로 커밋 메시지가 들어옴
+        commit_message: ${{ github.event.head_commit.message }}
+
+      run: |
+        python .github/actions/slack/main.py \
+          --repository "$repository" \
+          fail \
+          --workflow "$workflow" \
+          --commit-sha "$sha" \
+          --ref "$ref" \
+          --actor "$actor" \
+          --run-id "$run_id" \
+          --commit-msg "$commit_message" \
+          --extra-msg "$extra_message" > payload.json
+
+        echo "::group::debug payload (cat)"
+        cat payload.json
+        echo "::endgroup::"
+        echo "::group::debug payload (jq)"
+        jq . < payload.json
+        echo "::endgroup::"
+
+    - shell: bash
+      if: inputs.channel != '' && inputs.channel_id == '' && inputs.thread_ts == ''
+      env:
+        webhook_url: ${{ inputs.channel }}
+      run: |
+        curl -X POST "$webhook_url" \
+          -H 'Content-type: application/json' \
+          --data-binary "@payload.json"
+
+    - name: Send Slack notification with thread reply
+      if: inputs.channel_id != '' && inputs.thread_ts != ''
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+        payload: |
+          {
+            "channel": "${{ inputs.channel_id }}",
+            "thread_ts": "${{ inputs.thread_ts }}",
+            "text": "New notification from GitHub Actions",
+            "blocks": $(cat payload.json | jq '.blocks')
+            "reply_broadcast": true
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
