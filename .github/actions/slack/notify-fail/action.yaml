@@ -85,7 +85,8 @@ runs:
         token: ${{ inputs.token }}
         payload-file-path: payload.json
 
-    - name: Send Slack notification with thread reply by curl
+    - shell: bash
+      name: Send Slack notification with thread reply by curl
       run: |
         curl -X POST https://slack.com/api/chat.postMessage \
           -H "Authorization: Bearer ${{ inputs.token }}" \
