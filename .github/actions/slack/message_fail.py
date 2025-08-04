@@ -163,6 +163,6 @@ class FailMsgArg(MsgArg):
             dict["channel"] = global_args.channel_id
         if global_args.thread_ts:
             dict["thread_ts"] = global_args.thread_ts
-            dict["reply_broadcast"] = "true"
+            dict["reply_broadcast"] = True
 
         return dict

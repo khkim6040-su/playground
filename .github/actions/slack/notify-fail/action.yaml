@@ -83,14 +83,7 @@ runs:
       with:
         method: chat.postMessage
         token: ${{ inputs.token }}
-        payload: |
-          {
-            "channel": "${{ inputs.channel_id }}",
-            "thread_ts": "${{ inputs.thread_ts }}",
-            "text": "New notification from GitHub Actions",
-            "blocks": $(cat payload.json | jq '.blocks')
-            "reply_broadcast": true
-          }
+        payload-file-path: payload.json
 
 
 
