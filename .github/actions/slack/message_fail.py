@@ -13,6 +13,8 @@ class FailMsgArg(MsgArg):
     run_id: str
     commit_msg: str | None
     extra_msg: str | None
+    channel_id: str | None
+    thread_ts: str | None
 
     def __init__(
         self,
@@ -23,6 +25,8 @@ class FailMsgArg(MsgArg):
         run_id: str,
         commit_msg: str | None,
         extra_msg: str | None,
+        channel_id: str | None = None,
+        thread_ts: str | None = None,
     ):
         self.workflow = workflow
         self.commit_sha = commit_sha
@@ -31,7 +35,9 @@ class FailMsgArg(MsgArg):
         self.run_id = run_id
         self.commit_msg = FailMsgArg.normalize(commit_msg)
         self.extra_msg = FailMsgArg.normalize(extra_msg)
-
+        self.channel_id = channel_id
+        self.thread_ts = thread_ts
+        
     @staticmethod
     def normalize(text: str | None) -> str | None:
         if text is None:
