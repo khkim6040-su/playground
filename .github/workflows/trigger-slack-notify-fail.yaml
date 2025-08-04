@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Send Slack notification
-        uses: ./.github/actions/notify-fail
+        uses: ./.github/actions/slack/notify-fail
         with:
           message: ${{ github.event.inputs.message }}
           channel_id: ${{ github.event.inputs.channel_id }}
