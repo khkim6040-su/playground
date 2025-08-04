@@ -156,7 +156,7 @@ class FailMsgArg(MsgArg):
 
     def build_msg(self, global_args: GlobalArgs):
         dict = {
-            "text": f"❌ {self.workflow} 실패!",
+            "text": f"서버패치 결과 스레드 댓글 워크플로우 {self.workflow} 테스트",
             "blocks": self.build_blocks(global_args),
         }
         if global_args.channel_id:
