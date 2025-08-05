@@ -24,8 +24,10 @@ jobs:
       - name: Check if it is triggered by workflow_run
         if: ${{ github.event_name == 'workflow_run' }}
         run: |
-         echo "This job is triggered by workflow_run event."
-         echo "workflow_run.outpus: " ${{ toJson(github.event.workflow_run.outputs) }}
+          echo "This job is triggered by workflow_run event."
+          echo "workflow_run.outputs.message: " ${{ github.event.workflow_run.outputs.message }}
+          echo "workflow_run.outputs.channel_id: " ${{ github.event.workflow_run.outputs.channel_id }}
+          echo "workflow_run.outputs.thread_ts: " ${{ github.event.workflow_run.outputs.thread_ts }}
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Send Slack notification
