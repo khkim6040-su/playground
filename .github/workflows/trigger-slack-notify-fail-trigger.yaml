@@ -1,0 +1,25 @@
+name: "Manual Slack Fail Notification Trigger"
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "메시지"
+        required: false
+      channel_id:
+        description: "채널 ID"
+        required: true
+      thread_ts:
+        description: "스레드 타임스탬프"
+        required: true
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output inputs
+        run: |
+          echo "Inputs:"
+          echo "message=${{ github.event.inputs.message }}" >> "$GITHUB_OUTPUT"
+          echo "channel_id=${{ github.event.inputs.channel_id }}" >> "$GITHUB_OUTPUT"
+          echo "thread_ts=${{ github.event.inputs.thread_ts }}" >> "$GITHUB_OUTPUT"
