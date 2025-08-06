@@ -33,11 +33,11 @@ jobs:
       - name: success step2
         id: step4
         run: echo "This step succeeded"
-      - name: catch failure
-        if: ${{ failure() }}
-        run: |
-          echo "A previous step has failed"
-          echo "outcome of step2: ${{ steps.step1.outcome }}"
-          echo "outcome of step2: ${{ steps.step2.outcome }}"
-          echo "outcome of step3: ${{ steps.step3.outcome }}"
-          echo "outcome of step4: ${{ steps.step4.outcome }}"
+      # - name: catch failure
+      #   if: ${{ failure() }}
+      #   run: |
+      #     echo "A previous step has failed"
+      #     echo "outcome of step2: ${{ steps.step1.outcome }}"
+      #     echo "outcome of step2: ${{ steps.step2.outcome }}"
+      #     echo "outcome of step3: ${{ steps.step3.outcome }}"
+      #     echo "outcome of step4: ${{ steps.step4.outcome }}"
