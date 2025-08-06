@@ -19,6 +19,7 @@ jobs:
         run: |
           echo "A previous step has failed"
   can-failure-catch-previous-failed-ones:
+    needs: fail-job
     runs-on: ubuntu-latest
     steps:
       - name: fail step1
