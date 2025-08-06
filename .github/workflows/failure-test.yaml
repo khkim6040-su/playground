@@ -13,15 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: fail step1
+        id: step1
         run: exit 1
       - name: success step1
+        id: step2
         run: echo "This step succeeded"
       - name: fail step2
+        id: step3
         run: exit 1
       - name: success step2
+        id: step4
         run: echo "This step succeeded"
       - name: catch failure
         if: ${{ failure() }}
         run: |
           echo "A previous step has failed"
-
+          echo "outcome of step1: ${{ steps.step1.outcome }}"
+          echo "outcome of step2: ${{ steps.step2.outcome }}"
+          echo "outcome of step3: ${{ steps.step3.outcome }}"
+          echo "outcome of step4: ${{ steps.step4.outcome }}"
