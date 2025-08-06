@@ -1,0 +1,27 @@
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "메시지"
+        required: false
+        default: "테스트 메시지"
+
+
+
+jobs:
+  can-failure-catch-previous-failed-ones:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail step1
+        run: exit 1
+      - name: success step1
+        run: echo "This step succeeded"
+      - name: fail step2
+        run: exit 1
+      - name: success step2
+        run: echo "This step succeeded"
+      - name: catch failure
+        if: ${{ failure() }}
+        run: |
+          echo "A previous step has failed"
+
