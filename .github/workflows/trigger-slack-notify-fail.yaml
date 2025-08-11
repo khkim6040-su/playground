@@ -15,9 +15,9 @@ on:
         description: "스레드 타임스탬프"
         type: string
         required: true
-    secrets:
-      token: 
-        description: "Slack API Token"
+    secrets: 
+      SLACK_NK_NOTI_BOT_TOKEN:
+        description: "Slack Bot Token"
         required: true
   push:
     branches:
@@ -42,4 +42,4 @@ jobs:
           message: ${{ github.event.inputs.message || github.event.workflow_run.head_commit.message }}
           channel_id: ${{ github.event.inputs.channel_id }}
           thread_ts: ${{ github.event.inputs.thread_ts }}
-          token: ${{ secrets.token }}
+          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
