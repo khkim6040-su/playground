@@ -113,7 +113,7 @@ class FailMsgArg(MsgArg):
 
     def build_blocks(self, global_args: GlobalArgs):
         blocks = []
-        self.addHeader(blocks, f"❌ {self.workflow} 실패!")
+        self.addHeader(blocks, f"{self.workflow} 성공")
 
         if self.extra_msg:
             blocks.append(

@@ -15,6 +15,8 @@ on:
         description: "스레드 타임스탬프"
         type: string
         required: true
+    secrets:
+      token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
   push:
     branches:
       - not-exist
@@ -35,7 +37,7 @@ jobs:
       - name: Send Slack notification
         uses: ./.github/actions/slack/notify-fail
         with:
-          message: ${{ github.event.inputs.message }} | ${{ github.event.workflow_run.head_commit.message }}
+          message: ${{ github.event.inputs.message || github.event.workflow_run.head_commit.message }}
           channel_id: ${{ github.event.inputs.channel_id }}
           thread_ts: ${{ github.event.inputs.thread_ts }}
-          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+          token: ${{ github.event.inputs.token }}
