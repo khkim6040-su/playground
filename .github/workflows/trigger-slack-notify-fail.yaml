@@ -16,7 +16,9 @@ on:
         type: string
         required: true
     secrets:
-      token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+      token: 
+        description: "Slack API Token"
+        required: true
   push:
     branches:
       - not-exist
@@ -40,4 +42,4 @@ jobs:
           message: ${{ github.event.inputs.message || github.event.workflow_run.head_commit.message }}
           channel_id: ${{ github.event.inputs.channel_id }}
           thread_ts: ${{ github.event.inputs.thread_ts }}
-          token: ${{ github.event.inputs.token }}
+          token: ${{ secrets.token }}

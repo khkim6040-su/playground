@@ -29,3 +29,5 @@ jobs:
       message: ${{ github.event.inputs.message }}
       channel_id: ${{ github.event.inputs.channel_id }}
       thread_ts: ${{ github.event.inputs.thread_ts }}
+    secrets:
+      token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
