@@ -22,6 +22,14 @@ on:
   push:
     branches:
       - not-exist
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - "Deploy/eks/nk-dev-*/**"
+
 
 jobs:
   checkout:
