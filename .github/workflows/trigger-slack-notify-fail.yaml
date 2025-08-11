@@ -5,12 +5,15 @@ on:
     inputs:
       message:
         description: "메시지"
+        type: string
         required: false
       channel_id:
         description: "채널 ID"
+        type: string
         required: true
       thread_ts:
         description: "스레드 타임스탬프"
+        type: string
         required: true
   push:
     branches:
