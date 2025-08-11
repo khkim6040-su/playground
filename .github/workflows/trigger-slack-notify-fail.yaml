@@ -1,7 +1,7 @@
 name: "Manual Slack Fail Notification"
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       message:
         description: "메시지"
