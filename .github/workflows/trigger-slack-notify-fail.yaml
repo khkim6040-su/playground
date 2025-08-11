@@ -12,10 +12,9 @@ on:
       thread_ts:
         description: "스레드 타임스탬프"
         required: true
-  workflow_run:
-    workflows: ["Manual Slack Fail Notification Trigger"]
-    types:
-      - completed
+  push:
+    branches:
+      - not-exist
 
 jobs:
   checkout:
