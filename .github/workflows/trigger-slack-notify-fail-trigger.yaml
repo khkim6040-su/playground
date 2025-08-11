@@ -27,6 +27,6 @@ jobs:
     uses: ./.github/workflows/trigger-slack-notify-fail.yaml
     with:
       message: ${{ github.event.inputs.message }}
-      channel_id: ${{ github.event.inputs.channel_id || vars.SLACK_SERVER_DEPLOY_CHANNEL_ID }}
+      channel_id: ${{ vars.SLACK_SERVER_DEPLOY_CHANNEL_ID }}
       thread_ts: ${{ github.event.inputs.thread_ts }}
     secrets: inherit
