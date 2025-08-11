@@ -8,7 +8,7 @@ on:
         required: false
       channel_id:
         description: "채널 ID"
-        required: true
+        required: false
       thread_ts:
         description: "스레드 타임스탬프"
         required: true
@@ -27,6 +27,6 @@ jobs:
     uses: ./.github/workflows/trigger-slack-notify-fail.yaml
     with:
       message: ${{ github.event.inputs.message }}
-      channel_id: ${{ github.event.inputs.channel_id }}
+      channel_id: ${{ github.event.inputs.channel_id || vars.SLACK_SERVER_DEPLOY_CHANNEL_ID }}
       thread_ts: ${{ github.event.inputs.thread_ts }}
     secrets: inherit
