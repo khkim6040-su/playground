@@ -27,9 +27,9 @@ jobs:
     # runs-on: ubuntu-latest
       # - name: Checkout repository
       #   uses: actions/checkout@v2
-      - name: Trigger trigger-slack-notify-fail.yaml
-        uses: ./.github/workflows/trigger-slack-notify-fail.yaml
-        with:
-          message: ${{ github.event.inputs.message }}
-          channel_id: ${{ github.event.inputs.channel_id }}
-          thread_ts: ${{ github.event.inputs.thread_ts }}
+    - name: Trigger trigger-slack-notify-fail.yaml
+      uses: ./.github/workflows/trigger-slack-notify-fail.yaml
+      with:
+        message: ${{ github.event.inputs.message }}
+        channel_id: ${{ github.event.inputs.channel_id }}
+        thread_ts: ${{ github.event.inputs.thread_ts }}
