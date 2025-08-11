@@ -14,15 +14,18 @@ on:
         required: true
 
 jobs:
+  Inputs:
+    - name: Output inputs
+      run: |
+        echo "Inputs:"
+        echo "message=${{ github.event.inputs.message }}" >> "$GITHUB_OUTPUT"
+        echo "channel_id=${{ github.event.inputs.channel_id }}" >> "$GITHUB_OUTPUT"
+        echo "thread_ts=${{ github.event.inputs.thread_ts }}" >> "$GITHUB_OUTPUT"
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: Output inputs
-        run: |
-          echo "Inputs:"
-          echo "message=${{ github.event.inputs.message }}" >> "$GITHUB_OUTPUT"
-          echo "channel_id=${{ github.event.inputs.channel_id }}" >> "$GITHUB_OUTPUT"
-          echo "thread_ts=${{ github.event.inputs.thread_ts }}" >> "$GITHUB_OUTPUT"
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Trigger trigger-slack-notify-fail.yaml
         uses: ./.github/workflows/trigger-slack-notify-fail.yaml
         with:
