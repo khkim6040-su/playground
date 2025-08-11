@@ -4,24 +4,19 @@ description: "Send fail slack notification"
 inputs:
   message:
     description: "추가 메시지"
-    type: string
     required: false
     default: ""
   channel:
     description: "어느 채널에 보낼 지 incomming webhook url"
-    type: string
     required: false
   channel_id:
     description: "보낼 채널의 ID"
-    type: string
     required: false
   thread_ts:
     description: "스레드 댓글을 달 메세지의 타임스탬프. channel_id와 함께 사용되어야 함"
-    type: string
     required: false
   token:
     description: "슬랙 봇 토큰"
-    type: string
     required: true
 
 runs:
