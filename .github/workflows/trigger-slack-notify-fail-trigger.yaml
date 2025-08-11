@@ -15,6 +15,8 @@ on:
 
 jobs:
   Inputs:
+    runs-on: ubuntu-latest
+    steps:
     - name: Output inputs
       run: |
         echo "Inputs:"
