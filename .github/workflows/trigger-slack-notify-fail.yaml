@@ -36,9 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if it is triggered by workflow_call
-        if: ${{ github.workflow_name == 'workflow_dispatch' }}
+        if: ${{ inputs.thread_ts != ''}}
         run: |
           echo "This job is triggered by workflow_call event."
+          echo "github.event_name: ${{ github.event_name }}"
           echo "inputs.message: " ${{ inputs.message }}
           echo "inputs.channel_id: " ${{ inputs.channel_id }}
           echo "inputs.thread_ts: " ${{ inputs.thread_ts }}
