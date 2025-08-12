@@ -46,14 +46,10 @@ jobs:
       - name: checkout
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "This job is triggered by workflow_dispatch event."
-
-
-      # - name: Checkout repository
-      #   uses: actions/checkout@v2
-      # - name: Send Slack notification
-      #   uses: ./.github/actions/slack/notify-fail
-      #   with:
-      #     message: ${{ inputs.message || workflow_run.head_commit.message }}
-      #     channel_id: ${{ inputs.channel_id }}
-      #     thread_ts: ${{ inputs.thread_ts }}
-      #     token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+      - name: Send Slack notification
+        uses: ./.github/actions/slack/notify-fail
+        with:
+          message: ${{ inputs.message || workflow_run.head_commit.message }}
+          channel_id: ${{ inputs.channel_id }}
+          thread_ts: ${{ inputs.thread_ts }}
+          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
