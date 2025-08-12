@@ -39,9 +39,9 @@ jobs:
         if: ${{ github.workflow_name == 'workflow_dispatch' }}
         run: |
           echo "This job is triggered by workflow_call event."
-          echo "workflow_call.outputs.message: " ${{ workflow_call.outputs.message }}
-          echo "workflow_call.outputs.channel_id: " ${{ workflow_call.outputs.channel_id }}
-          echo "workflow_call.outputs.thread_ts: " ${{ workflow_call.outputs.thread_ts }}
+          echo "inputs.message: " ${{ inputs.message }}
+          echo "inputs.channel_id: " ${{ inputs.channel_id }}
+          echo "inputs.thread_ts: " ${{ inputs.thread_ts }}
       # - name: Checkout repository
       #   uses: actions/checkout@v2
       # - name: Send Slack notification
