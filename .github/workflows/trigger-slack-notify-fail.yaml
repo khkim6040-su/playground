@@ -35,7 +35,7 @@ jobs:
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if it is triggered by workflow_call
+      - name: Check if thread_ts is null
         if: ${{ inputs.thread_ts != ''}}
         run: |
           echo "This job is triggered by workflow_call event."
@@ -43,6 +43,11 @@ jobs:
           echo "inputs.message: " ${{ inputs.message }}
           echo "inputs.channel_id: " ${{ inputs.channel_id }}
           echo "inputs.thread_ts: " ${{ inputs.thread_ts }}
+      - name: checkout
+        if: ${{ github.event_name == 'workflow_call' }}
+        run: echo "This job is triggered by workflow_call event."
+
+
       # - name: Checkout repository
       #   uses: actions/checkout@v2
       # - name: Send Slack notification
