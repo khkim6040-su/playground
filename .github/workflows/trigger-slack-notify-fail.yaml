@@ -44,8 +44,8 @@ jobs:
           echo "inputs.channel_id: " ${{ inputs.channel_id }}
           echo "inputs.thread_ts: " ${{ inputs.thread_ts }}
       - name: checkout
-        if: ${{ github.event_name == 'workflow_call' }}
-        run: echo "This job is triggered by workflow_call event."
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "This job is triggered by workflow_dispatch event."
 
 
       # - name: Checkout repository
