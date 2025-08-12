@@ -35,19 +35,19 @@ jobs:
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if it is triggered by workflow_run
-        if: ${{ github.event_name == 'workflow_run' }}
+      - name: Check if it is triggered by workflow_call
+        if: ${{ github.event_name == 'workflow_call' }}
         run: |
-          echo "This job is triggered by workflow_run event."
-          echo "workflow_run.outputs.message: " ${{ github.event.workflow_run.outputs.message }}
-          echo "workflow_run.outputs.channel_id: " ${{ github.event.workflow_run.outputs.channel_id }}
-          echo "workflow_run.outputs.thread_ts: " ${{ github.event.workflow_run.outputs.thread_ts }}
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Send Slack notification
-        uses: ./.github/actions/slack/notify-fail
-        with:
-          message: ${{ github.event.inputs.message || github.event.workflow_run.head_commit.message }}
-          channel_id: ${{ github.event.inputs.channel_id }}
-          thread_ts: ${{ github.event.inputs.thread_ts }}
-          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+          echo "This job is triggered by workflow_call event."
+          echo "workflow_call.outputs.message: " ${{ github.event.workflow_call.outputs.message }}
+          echo "workflow_call.outputs.channel_id: " ${{ github.event.workflow_call.outputs.channel_id }}
+          echo "workflow_call.outputs.thread_ts: " ${{ github.event.workflow_call.outputs.thread_ts }}
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
+      # - name: Send Slack notification
+      #   uses: ./.github/actions/slack/notify-fail
+      #   with:
+      #     message: ${{ github.event.inputs.message || github.event.workflow_run.head_commit.message }}
+      #     channel_id: ${{ github.event.inputs.channel_id }}
+      #     thread_ts: ${{ github.event.inputs.thread_ts }}
+      #     token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
