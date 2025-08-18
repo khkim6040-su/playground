@@ -44,13 +44,13 @@ jobs:
           echo "inputs.message: " ${{ inputs.message }}
           echo "inputs.channel_id: " ${{ inputs.channel_id }}
           echo "inputs.thread_ts: " ${{ inputs.thread_ts }}
-      - name: checkout
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "This job is triggered by workflow_dispatch event."
-      - name: Send Slack notification
-        uses: ./.github/actions/slack/notify-fail
-        with:
-          message: ${{ inputs.message || '기본 메세지' }}
-          channel_id: ${{ inputs.channel_id }}
-          thread_ts: ${{ inputs.thread_ts }}
-          token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
+      # - name: checkout
+      #   if: ${{ github.event_name == 'workflow_dispatch' }}
+      #   run: echo "This job is triggered by workflow_dispatch event."
+      # - name: Send Slack notification
+      #   uses: ./.github/actions/slack/notify-fail
+      #   with:
+      #     message: ${{ inputs.message || '기본 메세지' }}
+      #     channel_id: ${{ inputs.channel_id }}
+      #     thread_ts: ${{ inputs.thread_ts }}
+      #     token: ${{ secrets.SLACK_NK_NOTI_BOT_TOKEN }}
