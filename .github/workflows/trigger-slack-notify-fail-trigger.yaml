@@ -26,7 +26,7 @@ jobs:
   Trigger:
     uses: ./.github/workflows/trigger-slack-notify-fail.yaml
     with:
-      message: ${{ github.event.inputs.message == '특정값' && 'message는 특정값입니다' || 'message는 특정값이 아닙니다' }} 
+      message: ${{ (github.event.inputs.message == '특정값' && 'message는 특정값입니다: ' github.event.inputs.message) || 'message는 특정값이 아닙니다: ' github.event.inputs.message }}
       channel_id: ${{ github.event.inputs.channel_id || vars.SLACK_SERVER_DEPLOY_CHANNEL_ID }}
       thread_ts: ${{ github.event.inputs.thread_ts }}
     secrets: inherit
