@@ -31,7 +31,8 @@ jobs:
         steps:
             - name: print
               run: |
-                echo "SERVERS=$SERVERS"
+                echo "SERVERS= ${{ needs.make-output.outputs.matrix }}"
+                echo "SERVERS json= ${{ fromJSON(needs.make-output.outputs.matrix) }}"
 
     test-output-exists-1:
         runs-on: ubuntu-latest
