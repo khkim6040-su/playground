@@ -23,7 +23,7 @@ jobs:
                 done
                 
                 SERVERS=$(echo $SERVERS | sed 's/^,//')
-                echo "SERVERS=$SERVERS" >> $GITHUB_OUTPUT
+                echo "servers={\"env\":[$SERVERS]}" >> $GITHUB_OUTPUT
 
     print-output:
         runs-on: ubuntu-latest
