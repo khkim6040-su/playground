@@ -19,7 +19,7 @@ jobs:
                 SERVERS=""
                 IFS=',' read -ra SERVERS_ARRAY <<< "${{ inputs.servers }}"
                 for server in "${SERVERS_ARRAY[@]}"; do
-                    SERVERS="$SERVERS,\"(basename "$server")\""
+                    SERVERS="$SERVERS,\""$server"\""
                 done
                 
                 SERVERS=$(echo $SERVERS | sed 's/^,//')
