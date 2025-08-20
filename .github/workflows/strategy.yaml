@@ -33,6 +33,7 @@ jobs:
               run: |
                 echo "SERVERS= ${{ needs.make-output.outputs.matrix }}"
                 echo "SERVERS json= ${{ fromJSON(needs.make-output.outputs.matrix) }}"
+                echo "SERVERS json.env= ${{ fromJSON(needs.make-output.outputs.matrix).env }}"
 
     test-output-exists-1:
         runs-on: ubuntu-latest
