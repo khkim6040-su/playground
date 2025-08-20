@@ -17,7 +17,8 @@ jobs:
             - id: make-output
               run: |
                 SERVERS=""
-                for server in ${{ fromJSON(inputs.servers) }}; do
+                IFS=',' read -ra SERVERS_ARRAY <<< "${{ inputs.servers }}"
+                for server in "${SERVERS_ARRAY[@]}"; do
                     SERVERS="$SERVERS,\"(basename "$server")\""
                 done
                 
