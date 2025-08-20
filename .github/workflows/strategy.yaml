@@ -4,9 +4,8 @@ on:
     workflow_dispatch:
         inputs:
             servers: 
-                description: "서버 리스트"
+                description: "서버 리스트 ex) server1,server2,server3"
                 required: false
-                default: "server1,server2,server3"
 
 jobs:
     make-output:
